@@ -1,0 +1,17 @@
+{
+  "files": {
+    "main.css": "/react-product-builder/static/css/main.acda77dc.css",
+    "main.js": "/react-product-builder/static/js/main.7841a26c.js",
+    "static/js/787.781ccf82.chunk.js": "/react-product-builder/static/js/787.781ccf82.chunk.js",
+    "index.html": "/react-product-builder/index.html",
+    "static/media/icon-arrow.svg": "/react-product-builder/static/media/icon-arrow.e89292b151ecfad28f8a.svg",
+    "static/media/icon-check.svg": "/react-product-builder/static/media/icon-check.72d5321dbe53fac9407b.svg",
+    "main.acda77dc.css.map": "/react-product-builder/static/css/main.acda77dc.css.map",
+    "main.7841a26c.js.map": "/react-product-builder/static/js/main.7841a26c.js.map",
+    "787.781ccf82.chunk.js.map": "/react-product-builder/static/js/787.781ccf82.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.acda77dc.css",
+    "static/js/main.7841a26c.js"
+  ]
+}
