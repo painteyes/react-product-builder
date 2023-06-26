@@ -1,17 +1,20 @@
-import './App.css';
 import React, { useState } from 'react';
+// import './App.css';
+// import header from './styles/header.css';
+// import common from './styles/common.css';
+// import Header from './components/Header';
+
+// import Footer from './components/Footer';
+
+// import BuilderSteps from './components/BuilderSteps.js';
+import ProductBuilder from './components/ProductBuilder';
+
+// import "./styles/reset.css"
 
 function App() {
-
-  const initialState = {
-    // Inizializza lo stato iniziale qui
-  };
-  
-  const [currentState, setState] = useState(initialState);
-
   return (
-    <div className="App">
-
+    <div className='App'>
+      <ProductBuilder/>
     </div>
   );
 }

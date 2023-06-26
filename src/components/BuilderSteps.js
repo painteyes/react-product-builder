@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useCallback, useRef } from 'react';
 import BuilderStepOne from './BuilderStepOne';
 import BuilderStepTwo from './BuilderStepTwo';
 import BuilderStepThree from './BuilderStepThree';
@@ -7,56 +7,34 @@ import cars from '../data/cars';
 
 function BuilderSteps(props) {
 
-  const { currentStep } = props;
+  const { 
+    currentStep,
+    selectedCar,
+    setSelectedCar,
+    isCarSelected,
+    isCarChanged,
+    colors,
+    selectedColor,
+    setSelectedColor,
+    accessories,
+    selectedAccessories,
+    setSelectedAccessories,
+  } = props;
 
-  const [selectedCar, setSelectedCar] = useState(null);
-  const [selectedColor, setSelectedColor] = useState(null);
-  const [selectedAccessories, setSelectedAccessories] = useState(null);
+  const previousLoadedRef = useRef({});
 
-  const checkSelectedCarChange = useCallback((newSelectedCar, prevSelectedCar = selectedCar) => {
-    if (!prevSelectedCar) {
-      return true;
-    } 
+  const checkSelectedCarChange = (newSelectedCar, prevSelectedCar) => {
     return newSelectedCar.id !== prevSelectedCar.id;
-  }, [selectedCar]);
-  
+  }
+
   const handleSelectCar = useCallback((newSelectedCar) => {
     setSelectedCar((prevSelectedCar) => {
-      if (checkSelectedCarChange(newSelectedCar, prevSelectedCar)) {
+      if (!isCarSelected || checkSelectedCarChange(newSelectedCar, prevSelectedCar)) {
         return newSelectedCar;
       }
-      return null;
+      return {};
     });
-  }, [checkSelectedCarChange]);
-
-  const sortedSelectedAccessories = useCallback(() => { 
-    if (selectedCar) {
-      const originalOrder = selectedCar.accessories.map(a => a.id);
-      const sortedArray = [...selectedAccessories].sort((a, b) => {
-        return originalOrder.indexOf(a.id) - originalOrder.indexOf(b.id);
-      });
-      return sortedArray;
-    }
-  }, [selectedAccessories, selectedCar])
-
-  useEffect(() => {
-    const resetSelectedColor = () => selectedCar ? setSelectedColor(selectedCar.colors[0]) : setSelectedColor(null) 
-    const resetSelectedAccessories = () => setSelectedAccessories(null) 
-    resetSelectedColor();
-    resetSelectedAccessories()
-  }, [selectedCar]);
-
-  useEffect(() => {
-    console.log("Car Selected: ", selectedCar);
-  }, [selectedCar]);
-
-  useEffect(() => {
-    console.log("Color Selected: ", selectedColor);
-  }, [selectedColor]);
-
-  useEffect(() => {
-    if (selectedAccessories) console.log("Accessories Selected: ",  selectedAccessories) ;
-  }, [selectedAccessories]);
+  }, [isCarSelected, setSelectedCar]);
 
   let mainContent, mainContentProps;
   switch (currentStep) {
@@ -64,13 +42,15 @@ function BuilderSteps(props) {
       mainContentProps = {
         cars: cars,
         selectedCar: selectedCar,
+        isCarSelected:isCarSelected,
+        previousLoadedRef: previousLoadedRef,
         handleSelectCar: handleSelectCar
       };
       mainContent = <BuilderStepOne {...mainContentProps} />;
       break;
     case 2:
       mainContentProps = {
-        availableColors: selectedCar?.colors,
+        colors: colors,
         selectedColor: selectedColor,
         setSelectedColor: setSelectedColor,
       };
@@ -78,7 +58,7 @@ function BuilderSteps(props) {
       break;
     case 3:
       mainContentProps = {
-        availableAccessories: selectedCar.accessories,
+        accessories: accessories,
         selectedAccessories: selectedAccessories,
         setSelectedAccessories: setSelectedAccessories,
       };
@@ -88,7 +68,7 @@ function BuilderSteps(props) {
       mainContentProps = {
         selectedCar: selectedCar,
         selectedColor: selectedColor,
-        selectedAccessories: sortedSelectedAccessories(),
+        selectedAccessories: selectedAccessories,
       };
       mainContent = <BuilderStepFour {...mainContentProps} />;
       break;
@@ -97,9 +77,13 @@ function BuilderSteps(props) {
   }
 
   return (
-    <div>
-      {mainContent}
-    </div>  
+    <div className="builder-steps">
+        <ul>
+          <li className="builder-step active">
+            {mainContent}
+          </li>
+        </ul>
+    </div>      
   );
 }
 

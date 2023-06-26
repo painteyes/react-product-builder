@@ -1,48 +1,33 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useMemo } from 'react';
 
 function Header(props) {
-
-    const { setCurrentStep } = props;
-
-    const navItems = useMemo(() => [
-        "models",
-        "colors",
-        "accessories",
-        "summary"
-    ], []);
-      
-    const [selectedNavItem, setSelectedNavItem] = useState(navItems[0]);
-
-    const handleNavItemClick = (navItem) => {
-        setSelectedNavItem(navItem);
-    };
-
-    useEffect(() => {
-        const currentStep = navItems.indexOf(selectedNavItem) + 1;
-        setCurrentStep(currentStep);
-    }, [navItems, selectedNavItem, setCurrentStep]);
-      
+    
+    const { 
+        stepsByNumber, 
+        currentStep, 
+        handleCurrentStep, 
+        isCarSelected
+    } = props;
+  
+  const keys = useMemo(() => Object.keys(stepsByNumber).map(Number), [stepsByNumber]);
+  
     return (
-        <header>
+        <header className='main-header'>
             <h1>Product Builder</h1>
-            <nav>
+            <nav className={`builder-main-nav ${isCarSelected ? "" : "disabled"}`}>
                 <ul>
-                    <li className={selectedNavItem === navItems[0] ? "active" : ""} onClick={() => handleNavItemClick(navItems[0])}>
-                        <a href={`#${navItems[0]}`}>{navItems[0]}</a>
+                {keys.map((step, index) => (
+                    <li key={index} className={currentStep === step ? "active" : ""} onClick={() => handleCurrentStep(step)}>
+                        <a href={`#${stepsByNumber[step]}`}>{stepsByNumber[step]}</a>
                     </li>
-                    <li className={selectedNavItem === navItems[1] ? "active" : ""} onClick={() => handleNavItemClick(navItems[1])}>
-                        <a href={`#${navItems[1]}`}>{navItems[1]}</a>
-                    </li>
-                    <li className={selectedNavItem === navItems[2] ? "active" : ""} onClick={() => handleNavItemClick(navItems[2])}>
-                        <a href={`#${navItems[2]}`}>{navItems[2]}</a>
-                    </li>
-                    <li className={selectedNavItem === navItems[3] ? "active" : ""} onClick={() => handleNavItemClick(navItems[3])}>
-                        <a href={`#${navItems[3]}`}>{navItems[3]}</a>
-                    </li>
+                ))}
                 </ul>
             </nav>
-        </header>  
-    );
+            <a href="https://codyhouse.co/gem/product-builder" className={'nugget-info hide-on-mobile'}>
+                Article & Download
+            </a>
+        </header>
+    )
 }
 
 export default Header;
