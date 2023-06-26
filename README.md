@@ -18,7 +18,7 @@ This project is a web-based car configurator. It allows users to customize vario
 You can **[check it out here](https://painteyes.github.io/react-product-builder/)** !
 
 ### Screenshot
-<img src="[https://postimg.cc/yWkX3HNV](https://i.postimg.cc/Kc59VcSg/c889c069-6074-4550-95f5-c30a37966902.png)"/>
+<img src="https://i.postimg.cc/Kc59VcSg/c889c069-6074-4550-95f5-c30a37966902.png"/>
 
 ## Contributor
 - [**Andrea Occhipinti**](https://github.com/painteyes)
