@@ -155,8 +155,6 @@ function ProductBuilder() {
           isCarSelected,
           totalPrice
         }} 
-        baseColor={colorOptions[0]} 
-
       />
     </div>
   );
